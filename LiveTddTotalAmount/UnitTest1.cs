@@ -45,6 +45,13 @@ namespace LiveTddTotalAmount
             TotalAmountShouldBe(0, new DateTime(2018, 5, 1), new DateTime(2018, 5, 1));
         }
 
+        [TestMethod]
+        public void one_effective_day_period_overlap_budget_month_FirstDay()
+        {
+            GivenBudgets(new Budget { YearMonth = "201804", Amount = 30 });
+            TotalAmountShouldBe(1, new DateTime(2018, 3, 31), new DateTime(2018, 4, 1));
+        }
+
         private void GivenBudgets(params Budget[] budgets)
         {
             _repository.GetAll().Returns(budgets.ToList());
