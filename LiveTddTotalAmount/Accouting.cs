@@ -14,8 +14,12 @@ namespace LiveTddTotalAmount
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 
-        public decimal EffectiveDays()
+        public decimal EffectiveDays(Budget budget)
         {
+            if (EndDate < budget.FirstDay)
+            {
+                return 0;
+            }
             var days = (EndDate.AddDays(1) - StartDate).Days;
             return days;
         }
@@ -36,7 +40,7 @@ namespace LiveTddTotalAmount
             var budgets = _repository.GetAll();
             if (budgets.Any())
             {
-                return period.EffectiveDays();
+                return period.EffectiveDays(budgets[0]);
             }
             return 0;
         }
