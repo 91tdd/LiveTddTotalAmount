@@ -24,6 +24,13 @@ namespace LiveTddTotalAmount
             TotalAmountShouldBe(0, new DateTime(2018, 4, 1), new DateTime(2018, 4, 1));
         }
 
+        [TestMethod]
+        public void one_effective_day_period_inside_budget_month()
+        {
+            GivenBudgets(new Budget { YearMonth = "201804", Amount = 30 });
+            TotalAmountShouldBe(1, new DateTime(2018, 4, 1), new DateTime(2018, 4, 1));
+        }
+
         private void GivenBudgets(params Budget[] budgets)
         {
             _repository.GetAll().Returns(budgets.ToList());

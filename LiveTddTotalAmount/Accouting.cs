@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace LiveTddTotalAmount
 {
@@ -13,6 +14,12 @@ namespace LiveTddTotalAmount
 
         public decimal TotalAmount(DateTime startDate, DateTime endDate)
         {
+            var budgets = _repository.GetAll();
+            if (budgets.Any())
+            {
+                var days = (endDate.AddDays(1) - startDate).Days;
+                return days;
+            }
             return 0;
         }
     }
