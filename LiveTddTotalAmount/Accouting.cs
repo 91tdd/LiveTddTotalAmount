@@ -14,22 +14,22 @@ namespace LiveTddTotalAmount
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 
-        public decimal EffectiveDays(Budget budget)
+        public decimal OverlappingDays(Period period)
         {
-            if (StartDate > budget.LastDay)
+            if (StartDate > period.EndDate)
             {
                 return 0;
             }
-            if (EndDate < budget.FirstDay)
+            if (EndDate < period.StartDate)
             {
                 return 0;
             }
-            var effectiveEndDate = EndDate > budget.LastDay
-                ? budget.LastDay
+            var effectiveEndDate = EndDate > period.EndDate
+                ? period.EndDate
                 : EndDate;
 
-            var effectiveStartDate = StartDate < budget.FirstDay
-                ? budget.FirstDay
+            var effectiveStartDate = StartDate < period.StartDate
+                ? period.StartDate
                 : StartDate;
 
             var days = (effectiveEndDate.AddDays(1) - effectiveStartDate).Days;
@@ -52,7 +52,8 @@ namespace LiveTddTotalAmount
             var budgets = _repository.GetAll();
             if (budgets.Any())
             {
-                return period.EffectiveDays(budgets[0]);
+                var budget = budgets[0];
+                return period.OverlappingDays(new Period(budget.FirstDay, budget.LastDay));
             }
             return 0;
         }
