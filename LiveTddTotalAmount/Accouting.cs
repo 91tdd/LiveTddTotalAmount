@@ -3,6 +3,24 @@ using System.Linq;
 
 namespace LiveTddTotalAmount
 {
+    public class Period
+    {
+        public Period(DateTime startDate, DateTime endDate)
+        {
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
+
+        public decimal EffectiveDays()
+        {
+            var days = (EndDate.AddDays(1) - StartDate).Days;
+            return days;
+        }
+    }
+
     public class Accouting
     {
         private readonly IRepository<Budget> _repository;
@@ -14,11 +32,11 @@ namespace LiveTddTotalAmount
 
         public decimal TotalAmount(DateTime startDate, DateTime endDate)
         {
+            var period = new Period(startDate, endDate);
             var budgets = _repository.GetAll();
             if (budgets.Any())
             {
-                var days = (endDate.AddDays(1) - startDate).Days;
-                return days;
+                return period.EffectiveDays();
             }
             return 0;
         }
