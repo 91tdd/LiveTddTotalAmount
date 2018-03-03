@@ -19,8 +19,7 @@ namespace LiveTddTotalAmount
         {
             get
             {
-                var daysInMonth = DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
-                return DateTime.ParseExact(YearMonth + daysInMonth, "yyyyMMdd", null);
+                return DateTime.ParseExact(YearMonth + TotalDays, "yyyyMMdd", null);
             }
         }
 
@@ -30,6 +29,12 @@ namespace LiveTddTotalAmount
             {
                 return DateTime.DaysInMonth(FirstDay.Year, FirstDay.Month);
             }
+        }
+
+        public int DailyAmount()
+        {
+            var dailyAmount = Amount / TotalDays;
+            return dailyAmount;
         }
     }
 }
