@@ -19,9 +19,7 @@ namespace LiveTddTotalAmount
             if (budgets.Any())
             {
                 var budget = budgets[0];
-                var overlappingDays = period.OverlappingDays(new Period(budget.FirstDay, budget.LastDay));
-
-                return overlappingDays * budget.DailyAmount();
+                return budget.EffectiveAmount(period);
             }
             return 0;
         }
