@@ -1,31 +1,37 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace LiveTddTotalAmount
 {
     [TestClass]
     public class TotalAmountTests
     {
+        private IRepository<Budget> _repository = Substitute.For<IRepository<Budget>>();
+        private Accouting _accouting;
+
+        [TestInitialize]
+        public void TestInit()
+        {
+            _accouting = new Accouting(_repository);
+        }
+
         [TestMethod]
         public void no_budgets()
         {
-            var repository = Substitute.For<IRepository<Budget>>();
-            repository.GetAll().Returns(new List<Budget>());
-
-            var accouting = new Accouting(repository);
-            var totalAmount = accouting.TotalAmount(new DateTime(2018, 4, 1), new DateTime(2018, 4, 1));
-            Assert.AreEqual(0, totalAmount);
+            GivenBudgets();
+            TotalAmountShouldBe(0, new DateTime(2018, 4, 1), new DateTime(2018, 4, 1));
         }
-    }
 
-    public interface IRepository<T>
-    {
-        List<T> GetAll();
-    }
+        private void GivenBudgets(params Budget[] budgets)
+        {
+            _repository.GetAll().Returns(budgets.ToList());
+        }
 
-    public class Budget
-    {
+        private void TotalAmountShouldBe(int expected, DateTime startDate, DateTime endDate)
+        {
+            Assert.AreEqual(expected, _accouting.TotalAmount(startDate, endDate));
+        }
     }
 }
