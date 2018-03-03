@@ -7,7 +7,7 @@ namespace LiveTddTotalAmount
         public int Amount { get; set; }
         public string YearMonth { get; set; }
 
-        public DateTime FirstDay
+        private DateTime FirstDay
         {
             get
             {
@@ -15,7 +15,7 @@ namespace LiveTddTotalAmount
             }
         }
 
-        public DateTime LastDay
+        private DateTime LastDay
         {
             get
             {
@@ -23,7 +23,7 @@ namespace LiveTddTotalAmount
             }
         }
 
-        public int TotalDays
+        private int TotalDays
         {
             get
             {
@@ -31,15 +31,14 @@ namespace LiveTddTotalAmount
             }
         }
 
-        public int DailyAmount()
-        {
-            var dailyAmount = Amount / TotalDays;
-            return dailyAmount;
-        }
-
         public decimal EffectiveAmount(Period period)
         {
             return period.OverlappingDays(new Period(FirstDay, LastDay)) * DailyAmount();
+        }
+
+        private int DailyAmount()
+        {
+            return Amount / TotalDays;
         }
     }
 }
