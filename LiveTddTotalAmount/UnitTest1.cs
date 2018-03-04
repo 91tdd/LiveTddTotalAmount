@@ -9,12 +9,12 @@ namespace LiveTddTotalAmount
     public class TotalAmountTests
     {
         private IRepository<Budget> _repository = Substitute.For<IRepository<Budget>>();
-        private Accouting _accouting;
+        private Accounting _accounting;
 
         [TestInitialize]
         public void TestInit()
         {
-            _accouting = new Accouting(_repository);
+            _accounting = new Accounting(_repository);
         }
 
         [TestMethod]
@@ -91,7 +91,7 @@ namespace LiveTddTotalAmount
 
         private void TotalAmountShouldBe(int expected, DateTime startDate, DateTime endDate)
         {
-            Assert.AreEqual(expected, _accouting.TotalAmount(startDate, endDate));
+            Assert.AreEqual(expected, _accounting.TotalAmount(startDate, endDate));
         }
     }
 }

@@ -59,7 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accouting.cs" />
+    <Compile Include="Accounting.cs" />
     <Compile Include="Budget.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Period.cs" />

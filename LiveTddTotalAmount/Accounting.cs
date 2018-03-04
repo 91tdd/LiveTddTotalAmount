@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace LiveTddTotalAmount
 {
-    public class Accouting
+    public class Accounting
     {
         private readonly IRepository<Budget> _repository;
 
-        public Accouting(IRepository<Budget> repository)
+        public Accounting(IRepository<Budget> repository)
         {
             _repository = repository;
         }
