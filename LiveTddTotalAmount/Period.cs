@@ -19,11 +19,7 @@ namespace LiveTddTotalAmount
 
         public decimal OverlappingDays(Period period)
         {
-            if (StartDate > period.EndDate)
-            {
-                return 0;
-            }
-            if (EndDate < period.StartDate)
+            if (HasNoOverlapping(period))
             {
                 return 0;
             }
@@ -32,9 +28,14 @@ namespace LiveTddTotalAmount
             return days;
         }
 
-        private static int TotalDays(DateTime effectiveEndDate, DateTime effectiveStartDate)
+        private bool HasNoOverlapping(Period period)
         {
-            return (effectiveEndDate.AddDays(1) - effectiveStartDate).Days;
+            return StartDate > period.EndDate || EndDate < period.StartDate;
+        }
+
+        private static int TotalDays(DateTime endDate, DateTime startDate)
+        {
+            return (endDate.AddDays(1) - startDate).Days;
         }
 
         private DateTime EffectiveStartDate(Period period)
